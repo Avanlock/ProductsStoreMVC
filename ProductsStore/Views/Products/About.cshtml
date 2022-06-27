@@ -1,0 +1,35 @@
+﻿@model Product
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="card" style="width: 20rem;">
+    <img src="@Model.ImgUrl" class="card-img-top" alt="img">
+    <div class="card-body">
+        <h5 class="card-title">Наименованте товара - @Model.Name</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Цена товара - @Model.Price</li>
+        <li class="list-group-item">Дата cоздания - @Model.CreateDate</li>
+        <li class="list-group-item">Дата изменения - @Model.UpdateDate</li>
+        <li class="list-group-item">Категория товара - @Model.Category.Name</li>
+        <li class="list-group-item">Бренд товара - @Model.Brand.Name</li>
+    </ul>
+    <div class="card-body">
+        <a asp-route-productId="@Model.Id"
+           asp-action="Edit"
+           asp-controller="Products"
+           class="btn btn-outline-info">
+            Редактировать
+        </a>
+
+        <a asp-route-productId="@Model.Id"
+           asp-action="Delete"
+           asp-controller="Products"
+           class="btn btn-outline-info">
+            Удалить
+        </a>
+    </div>
+</div>

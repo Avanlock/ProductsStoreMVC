@@ -1,0 +1,62 @@
+﻿@model Order
+
+@{
+    ViewBag.Title = "Заказать товар";
+    Layout = "_Layout";
+}
+
+<h2>Заполните форму для заказа</h2>
+<form asp-action="Create" asp-controller="Orders" method="post">
+    <div class="mb-3">
+        <label class="form-label">
+            Имя покупателя
+        </label>
+        <input class="form-control" asp-for="UserName" type="text">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Адрес доставки
+        </label>
+        <input class="form-control" asp-for="Address" type="text">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Номер телефона
+        </label>
+        <input class="form-control" asp-for="ContactPhone" type="text">
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label">
+            Товар :
+        </label>
+        <input disabled type="text" value="@Model.Product.Name">
+        <input class="form-control" asp-for="ProductId" type="hidden" value="@Model.Product.Id">
+    </div>
+    
+    <button type="submit">Заказать</button>
+</form>
+
+
+
+@* <form> *@
+@*     <div class="mb-3"> *@
+@*         <label for="exampleInputEmail1" class="form-label">Email address</label> *@
+@*         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> *@
+@*         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> *@
+@*     </div> *@
+@*      *@
+@*     <div class="mb-3"> *@
+@*         <label for="exampleInputPassword1" class="form-label">Password</label> *@
+@*         <input type="password" class="form-control" id="exampleInputPassword1"> *@
+@*     </div> *@
+@*      *@
+@*     <div class="mb-3 form-check"> *@
+@*         <input type="checkbox" class="form-check-input" id="exampleCheck1"> *@
+@*         <label class="form-check-label" for="exampleCheck1">Check me out</label> *@
+@*     </div> *@
+@*      *@
+@*       <button type="submit" class="btn btn-primary">Submit</button> *@
+@* </form> *@

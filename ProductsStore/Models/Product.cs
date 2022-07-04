@@ -9,13 +9,14 @@ namespace ProductsStore.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Заполните поле!")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Заполните поле!")]
         [Range(1, int.MaxValue, ErrorMessage = "Товар не может быть бесплатным")]
         public decimal Price { get; set; }
         public string CreateDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy/ HH:mm");
         public string UpdateDate { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Заполните поле!")]
         public string ImgUrl { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]

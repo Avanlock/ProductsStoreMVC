@@ -8,6 +8,7 @@ namespace ProductsStore.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<UserFeedback> UserFeedbacks { get; set; }
         
         public ProductContext(DbContextOptions<ProductContext> options) : base(options)
         {

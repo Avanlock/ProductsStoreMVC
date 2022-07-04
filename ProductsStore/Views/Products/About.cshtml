@@ -1,35 +1,81 @@
 ﻿@model Product
+@inject ProductContext Context
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "О товаре";
     Layout = "_Layout";
 }
 
-<div class="card" style="width: 20rem;">
-    <img src="@Model.ImgUrl" class="card-img-top" alt="img">
-    <div class="card-body">
-        <h5 class="card-title">Наименованте товара - @Model.Name</h5>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Цена товара - @Model.Price</li>
-        <li class="list-group-item">Дата cоздания - @Model.CreateDate</li>
-        <li class="list-group-item">Дата изменения - @Model.UpdateDate</li>
-        <li class="list-group-item">Категория товара - @Model.Category.Name</li>
-        <li class="list-group-item">Бренд товара - @Model.Brand.Name</li>
-    </ul>
-    <div class="card-body">
-        <a asp-route-productId="@Model.Id"
-           asp-action="Edit"
-           asp-controller="Products"
-           class="btn btn-outline-info">
-            Редактировать
-        </a>
+@{
+    var feedbacks = Context.UserFeedbacks.ToList();
+}
 
-        <a asp-route-productId="@Model.Id"
-           asp-action="Delete"
-           asp-controller="Products"
-           class="btn btn-outline-info">
-            Удалить
-        </a>
+<div class="d-flex justify-content-around">
+    <div class="card" style="width: 20rem;">
+        <img src="@Model.ImgUrl" class="card-img-top" alt="img">
+        <div class="card-body">
+            <h5 class="card-title">Наименованте товара - @Model.Name</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Цена товара - @Model.Price</li>
+            <li class="list-group-item">Дата cоздания - @Model.CreateDate</li>
+            <li class="list-group-item">Дата изменения - @Model.UpdateDate</li>
+            <li class="list-group-item">Категория товара - @Model.Category.Name</li>
+            <li class="list-group-item">Бренд товара - @Model.Brand.Name</li>
+        </ul>
+        <div class="card-body">
+    
+            <a asp-route-productId="@Model.Id"
+               asp-action="Edit"
+               asp-controller="Products"
+               class="btn btn-outline-info">
+                Редактировать
+            </a>
+            <a asp-route-productId="@Model.Id"
+               asp-action="Delete"
+               asp-controller="Products"
+               class="btn btn-outline-info">
+                Удалить
+            </a>
+            <a asp-route-productId="@Model.Id"
+               asp-action="Feedback"
+               asp-controller="UserFeedbacks"
+               class="btn btn-outline-info">
+                Оставить отзыв
+            </a>
+        </div>
+    </div>
+    
+    <div>
+        @{
+            var feedbacksList = feedbacks.Where(f => f.ProductId == Model.Id);
+            if (feedbacks.Count == 0)
+            {
+                <h3>Отзывов нету</h3>
+            }
+            else
+            {
+                <h3 class="mb-4">Отзывы к товару - @Model.Name</h3>
+                foreach (var feedback in feedbacksList)
+                {
+                    <div class="border-top">
+                        <p>Отзыв от клиента - @feedback.UserName</p>
+                        <p>Комментарий клиента @feedback.UserName - @feedback.Feedback</p>
+                        <p>Оценка клиента @feedback.UserName - @feedback.ProductEvaluation</p>
+                    </div>
+                }
+                var sum = 0;
+                var avg = 0;
+                for (int i = 0; i < feedbacks.Count; i++)
+                {
+                    if (feedbacks[i].ProductId == Model.Id)
+                    {
+                        sum += feedbacks[i].ProductEvaluation;
+                        avg = sum / feedbacks.Count(f => f.ProductId == Model.Id);
+                    }
+                }
+                <h4>Средняя оценка - @avg</h4>
+            }
+        }
     </div>
 </div>

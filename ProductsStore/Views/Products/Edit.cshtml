@@ -43,6 +43,7 @@
                 <label for="">
                     Ссылка на картинку
                     <input class="form-control" asp-for="ImgUrl" type="text">
+                    <span asp-validation-for="ImgUrl" class="text-danger"></span>
                 </label>
             </div>
             <button type="submit">Редактировать</button>
@@ -64,3 +65,10 @@
         </form>
     </div>
 </div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

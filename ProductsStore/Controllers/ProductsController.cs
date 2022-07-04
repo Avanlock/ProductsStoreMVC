@@ -10,7 +10,7 @@ namespace ProductsStore.Controllers
     public class ProductsController : Controller
     {
         private readonly ProductContext _db;
-        
+
         public ProductsController(ProductContext db)
         {
             _db = db;
@@ -59,33 +59,41 @@ namespace ProductsStore.Controllers
         [HttpGet]
         public IActionResult Edit(int productId)
         {
-            IEnumerable<SelectListItem> categoryItems = _db.Categories.Select(i => new SelectListItem
+            if (ModelState.IsValid)
             {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+                IEnumerable<SelectListItem> categoryItems = _db.Categories.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
             
-            IEnumerable<SelectListItem> brandItems = _db.Brands.Select(i => new SelectListItem
-            {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
-            ViewBag.brandItems = brandItems;
-            ViewBag.categoryItems = categoryItems;
-            var product = _db.Products.FirstOrDefault(p => p.Id == productId);
-            if (product is null)
-                return Content("Такого телефона нет.");
-            return View(product);
+                IEnumerable<SelectListItem> brandItems = _db.Brands.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                ViewBag.brandItems = brandItems;
+                ViewBag.categoryItems = categoryItems;
+                var product = _db.Products.FirstOrDefault(p => p.Id == productId);
+                if (product is null)
+                    return BadRequest();
+                return View(product);
+            }
+            return View();
         }
         
 
         [HttpPost]
         public IActionResult Edit(Product product)
         {
-            product.UpdateDate = DateTime.Now.ToString("dd/MM/yyyy/ HH:mm");
-            _db.Products.Update(product);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                product.UpdateDate = DateTime.Now.ToString("dd/MM/yyyy/ HH:mm");
+                _db.Products.Update(product);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
         }
         
         [HttpGet]

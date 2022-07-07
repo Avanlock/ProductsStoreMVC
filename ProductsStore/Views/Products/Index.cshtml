@@ -15,10 +15,10 @@ else
     @foreach (var product in @Model)
     {
         <div class="card col-4">
-            <img src="@product.ImgUrl" class="card-img-top img" alt="productImg">
+            <img src="@WebConsts.ImagePath\@product.ImgUrl" class="card-img-top img" alt="productImg">
             <div class="card-body">
                 <h5 class="card-title">Наименование - @product.Name</h5>
-                <p class="card-text">Стоимость товара - @product.Price</p>
+                <p class="card-text">Стоимость товара - @product.Price тг</p>
                 <p class="card-text">Дата добавления - @product.CreateDate</p>
                 <div class="d-flex justify-content-around">
                     <a asp-route-productId="@product.Id"

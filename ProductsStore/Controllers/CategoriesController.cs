@@ -32,15 +32,44 @@ namespace ProductsStore.Controllers
         {
             if (category != null)
             {
-                if (!_db.Categories.Any(c => c.Name.Equals(category.Name)))
+                if (ModelState.IsValid)
                 {
                     _db.Categories.Add(category);
                     _db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
-            return Content("Такая категория уже есть!");
+            return View();
         }
+        
+        [HttpGet]
+        public IActionResult Edit(int categoryId)
+        {
+            if (ModelState.IsValid)
+            {
+                var category = _db.Categories.FirstOrDefault(c => c.Id == categoryId);
+                if (category is null)
+                {
+                    return BadRequest();
+                }
+                return View(category);
+            }
+            return View();
+        }
+        
+
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Update(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+        
         
         
         [HttpGet]

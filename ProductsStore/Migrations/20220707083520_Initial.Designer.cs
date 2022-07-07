@@ -10,7 +10,7 @@ using ProductsStore.Models;
 namespace ProductsStore.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20220706163426_Initial")]
+    [Migration("20220707083520_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,8 @@ namespace ProductsStore.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");

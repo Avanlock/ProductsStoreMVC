@@ -1,0 +1,37 @@
+﻿@model Category
+
+@{
+    ViewBag.Title = "Редактирование категорий";
+    Layout = "_Layout";
+}
+
+<h2>Заполните форму для редактирования бренда</h2>
+<div class="row">
+    <div class="phone_add_form col-md-6">
+        <form asp-controller="Categories" asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <div>
+                    <label for="">
+                        Наименование категорий
+                        <input required class="form-control" asp-for="Name" type="text">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </label>
+                </div>
+            </div>
+            <button type="submit">Редактировать категорию</button>
+            <div class="form-group">
+                <label for="">
+                    <input hidden asp-for="Id" value="@Model.Id">
+                </label>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

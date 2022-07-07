@@ -19,5 +19,8 @@ namespace ProductsStore.Controllers
 
         [AcceptVerbs("GET", "POST")]
         public bool CheckBrand(string name) => !_context.Brands.ToList().Any(b => b.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-        }
+        
+        [AcceptVerbs("GET", "POST")]
+        public bool CheckCategory(string name) => !_context.Categories.ToList().Any(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+    }
 }

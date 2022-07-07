@@ -12,12 +12,12 @@
 
 <div class="d-flex justify-content-around">
     <div class="card" style="width: 20rem;">
-        <img src="@Model.ImgUrl" class="card-img-top" alt="img">
+        <img src="@WebConsts.ImagePath\@Model.ImgUrl" alt="productImg">
         <div class="card-body">
             <h5 class="card-title">Наименованте товара - @Model.Name</h5>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Цена товара - @Model.Price</li>
+            <li class="list-group-item">Цена товара - @Model.Price тг</li>
             <li class="list-group-item">Дата cоздания - @Model.CreateDate</li>
             <li class="list-group-item">Дата изменения - @Model.UpdateDate</li>
             <li class="list-group-item">Категория товара - @Model.Category.Name</li>

@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ProductsStore.Enums;
 using ProductsStore.Models;
 
 namespace ProductsStore.Controllers
@@ -21,10 +23,48 @@ namespace ProductsStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(SortState sortState  = SortState.NameAsc)
         {
-            var phones = _db.Products.ToList();
-            return View(phones);
+            IQueryable<Product> products = _db.Products.Include(c => c.Category).Include(b => b.Brand);
+            ViewBag.NameSort = sortState == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewBag.BrandSort = sortState == SortState.BrandAsc ? SortState.BrandDesc : SortState.BrandAsc;
+            ViewBag.DateSort = sortState == SortState.DateAsc ? SortState.DateDesc : SortState.DateAsc;
+            ViewBag.CategorySort = sortState == SortState.CategoryAsc ? SortState.CategoryDesc : SortState.CategoryAsc;
+            ViewBag.PriceSort = sortState == SortState.PriceAsc ? SortState.PriceDesc : SortState.PriceAsc;
+            switch (sortState)
+            {
+                case SortState.NameDesc:
+                    products = products.OrderByDescending(s => s.Name);
+                    break;
+                case SortState.BrandAsc:
+                    products = products.OrderBy(s => s.Brand.Name);
+                    break;
+                case SortState.BrandDesc:
+                    products = products.OrderByDescending(s => s.Brand.Name);
+                    break;
+                case SortState.DateAsc:
+                    products = products.OrderBy(s => s.CreateDate);
+                    break;
+                case SortState.DateDesc:
+                    products = products.OrderByDescending(s => s.CreateDate);
+                    break;
+                case SortState.CategoryAsc:
+                    products = products.OrderBy(s => s.Category.Name);
+                    break;
+                case SortState.CategoryDesc:
+                    products = products.OrderByDescending(s => s.Category.Name);
+                    break;
+                case SortState.PriceAsc:
+                    products = products.OrderBy(s => s.Price);
+                    break;
+                case SortState.PriceDesc:
+                    products = products.OrderByDescending(s => s.Price);
+                    break;
+                default:
+                    products = products.OrderBy(s => s.Name);
+                    break;
+            }
+            return View(products.AsNoTracking().ToList());
         }
         
         [HttpGet]

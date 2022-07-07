@@ -25,7 +25,7 @@ namespace ProductsStore
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ProductContext>(options => options.UseSqlite(connection));
+            services.AddDbContext<ProductContext>(option => option.UseNpgsql(connection));
             services.AddControllersWithViews();
         }
         

@@ -7,7 +7,7 @@
 <h2>Заполните форму для редактирования товара</h2>
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Edit" method="post">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="">
                     Наименование
@@ -28,7 +28,9 @@
                 <label for="">
                     Категория товара
                     <select asp-for="CategoryId" asp-items="@ViewBag.categoryItems" class="form-control">
+                        <option disabled selected>-- Выберите бренд --</option>
                     </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </label>
             </div>
             
@@ -36,13 +38,15 @@
                 <label for="">
                     Бренд товара
                     <select asp-for="BrandId" asp-items="@ViewBag.brandItems" class="form-control">
+                        <option disabled selected>-- Выберите бренд --</option>
                     </select>
+                    <span asp-validation-for="BrandId" class="text-danger"></span>
                 </label>
             </div>
             <div class="form-group">
                 <label for="">
-                    Ссылка на картинку
-                    <input class="form-control" asp-for="ImgUrl" type="text">
+                    Загрузить картинку
+                    <input class="form-control" type="file" name="files" id="uploadBox" accept="image/png, image/jpeg" multiple>
                     <span asp-validation-for="ImgUrl" class="text-danger"></span>
                 </label>
             </div>
@@ -60,6 +64,16 @@
             <div class="form-group">
                 <label for="">
                     <input hidden asp-for="BrandId" value="@Model.BrandId">
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    <input hidden asp-for="CreateDate" value="@Model.CreateDate">
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    <input hidden asp-for="ImgUrl" value="@Model.ImgUrl">
                 </label>
             </div>
         </form>

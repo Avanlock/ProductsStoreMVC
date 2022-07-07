@@ -23,12 +23,20 @@ else
                 <th>@category.Id</th>
                 <td>@category.Name</td>
                 <td class="text-center">
-                    <a onclick="myFunction()" asp-route-categoryId="@category.Id"
-                       asp-action="Delete"
-                       asp-controller="Categories"
-                       class="btn btn-outline-danger">
-                        Удалить
-                    </a>
+                    <div class="d-flex justify-content-around">
+                        <a asp-route-categoryId="@category.Id"
+                           asp-action="Delete"
+                           asp-controller="Categories"
+                           class="btn btn-outline-danger">
+                            Удалить
+                        </a>
+                        <a asp-route-categoryId="@category.Id"
+                           asp-action="Edit"
+                           asp-controller="Categories"
+                           class="btn btn-outline-danger">
+                            Редактировать
+                        </a>
+                    </div>
                 </td>
             </tr>
         }

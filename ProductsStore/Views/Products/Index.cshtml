@@ -11,31 +11,49 @@
 }
 else
 {
-    <div class="row">
-    @foreach (var product in @Model)
-    {
-        <div class="card col-4">
-            <img src="@WebConsts.ImagePath\@product.ImgUrl" class="card-img-top img" alt="productImg">
-            <div class="card-body">
-                <h5 class="card-title">Наименование - @product.Name</h5>
-                <p class="card-text">Стоимость товара - @product.Price тг</p>
-                <p class="card-text">Дата добавления - @product.CreateDate</p>
-                <div class="d-flex justify-content-around">
-                    <a asp-route-productId="@product.Id"
-                       asp-action="Create"
-                       asp-controller="Orders"
-                       class="btn btn-success">
-                        Заказать
-                    </a>
-                    <a asp-route-productId="@product.Id"
-                       asp-action="About"
-                       asp-controller="Products"
-                       class="btn btn-warning">
-                        Детали
-                    </a>
+    <div class="d-flex justify-content-around">
+        <a class="btn btn-outline-info" asp-action="Index" asp-route-sortState="@ViewBag.NameSort">
+            Сортировка по имене
+        </a>
+        <a class="btn btn-outline-info" asp-action="Index" asp-route-sortState="@ViewBag.BrandSort">
+            Сортировка по брендам
+        </a>
+        <a class="btn btn-outline-info" asp-action="Index"asp-route-sortState="@ViewBag.DateSort">
+            Сортировка по дате
+        </a>
+        <a class="btn btn-outline-info" asp-action="Index"asp-route-sortState="@ViewBag.CategorySort">
+            Сортировка по категориям
+        </a>
+        <a class="btn btn-outline-info" asp-action="Index"asp-route-sortState="@ViewBag.PriceSort">
+            Сортировка по ценам
+        </a>
+    </div>
+
+    <div class="row mt-4">
+        @foreach (var product in @Model)
+        {
+            <div class="card col-4">
+                <img src="@WebConsts.ImagePath\@product.ImgUrl" class="card-img-top img" alt="productImg">
+                <div class="card-body">
+                    <h5 class="card-title">Наименование - @product.Name</h5>
+                    <p class="card-text">Стоимость товара - @product.Price тг</p>
+                    <p class="card-text">Дата добавления - @product.CreateDate</p>
+                    <div class="d-flex justify-content-around">
+                        <a asp-route-productId="@product.Id"
+                           asp-action="Create"
+                           asp-controller="Orders"
+                           class="btn btn-success">
+                            Заказать
+                        </a>
+                        <a asp-route-productId="@product.Id"
+                           asp-action="About"
+                           asp-controller="Products"
+                           class="btn btn-warning">
+                            Детали
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
     </div>
 }

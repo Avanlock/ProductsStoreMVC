@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using ProductsStore.Models;
 
 namespace ProductsStore.Controllers
 {
+    
     public class ProductsController : Controller
     {
         private readonly ProductContext _db;
@@ -68,6 +70,7 @@ namespace ProductsStore.Controllers
         }
         
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Add()
         {
             IEnumerable<SelectListItem> categoryItems = _db.Categories.Select(i => new SelectListItem
@@ -88,6 +91,7 @@ namespace ProductsStore.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult Add(Product product)
         {
             if (ModelState.IsValid)
@@ -119,6 +123,7 @@ namespace ProductsStore.Controllers
         }
         
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int productId)
         {
             if (ModelState.IsValid)
@@ -144,8 +149,9 @@ namespace ProductsStore.Controllers
             return View();
         }
         
-
+        
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
@@ -175,6 +181,7 @@ namespace ProductsStore.Controllers
         }
         
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int productId)
         {
             var product = _db.Products.FirstOrDefault(p => p.Id == productId);
@@ -189,6 +196,7 @@ namespace ProductsStore.Controllers
         }
         
         [HttpGet]
+        [Authorize(Roles = "user, admin")]
         public IActionResult About(int productId)
         {
             var product = _db.Products.FirstOrDefault(p => p.Id == productId);

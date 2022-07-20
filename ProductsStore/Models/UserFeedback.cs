@@ -7,7 +7,6 @@ namespace ProductsStore.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Заполните поле!")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Заполните поле!")]
         public string Feedback { get; set; }

@@ -4,21 +4,11 @@
     ViewBag.Title = "Отзыв о товаре";
     Layout = "_Layout";
 }
-
-
 <h2>Заполните форму чтобы оставить отзыв</h2>
 <div class="row">
     <div class="col-md-6">
         <form asp-controller="UserFeedbacks" asp-action="FeedBack" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="w-50" for="">
-                    Введите свое имя
-                    <input class="form-control" asp-for="UserName" type="text">
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </label>
-            </div>
-
             <div class="form-group">
                 <label class="w-50" for="">
                     Ваш отзыв

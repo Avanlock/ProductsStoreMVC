@@ -24,25 +24,36 @@
             <li class="list-group-item">Бренд товара - @Model.Brand.Name</li>
         </ul>
         <div class="card-body">
-    
-            <a asp-route-productId="@Model.Id"
-               asp-action="Edit"
-               asp-controller="Products"
-               class="btn btn-outline-info">
-                Редактировать
-            </a>
-            <a asp-route-productId="@Model.Id"
-               asp-action="Delete"
-               asp-controller="Products"
-               class="btn btn-outline-info">
-                Удалить
-            </a>
-            <a asp-route-productId="@Model.Id"
-               asp-action="Feedback"
-               asp-controller="UserFeedbacks"
-               class="btn btn-outline-info">
-                Оставить отзыв
-            </a>
+            @if (User.IsInRole("admin"))
+            {
+                <a asp-route-productId="@Model.Id"
+                   asp-action="Edit"
+                   asp-controller="Products"
+                   class="btn btn-outline-info">
+                    Редактировать
+                </a>
+                <a asp-route-productId="@Model.Id"
+                   asp-action="Delete"
+                   asp-controller="Products"
+                   class="btn btn-outline-info">
+                    Удалить
+                </a>
+            }
+            @if (User.IsInRole("user"))
+            {
+                <a asp-route-productId="@Model.Id"
+                   asp-action="Create"
+                   asp-controller="Orders"
+                   class="btn btn-success">
+                    Заказать
+                </a>
+                <a asp-route-productId="@Model.Id"
+                   asp-action="Feedback"
+                   asp-controller="UserFeedbacks"
+                   class="btn btn-outline-info">
+                    Оставить отзыв
+                </a>
+            }
         </div>
     </div>
     

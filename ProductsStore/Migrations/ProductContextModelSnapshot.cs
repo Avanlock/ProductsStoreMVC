@@ -126,6 +126,69 @@ namespace ProductsStore.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("ProductsStore.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "user"
+                        });
+                });
+
+            modelBuilder.Entity("ProductsStore.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin@admin.com",
+                            Password = "1234",
+                            RoleId = 1,
+                            UserName = "Admin"
+                        });
+                });
+
             modelBuilder.Entity("ProductsStore.Models.UserFeedback", b =>
                 {
                     b.Property<int>("Id")
@@ -184,6 +247,15 @@ namespace ProductsStore.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("ProductsStore.Models.User", b =>
+                {
+                    b.HasOne("ProductsStore.Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("ProductsStore.Models.UserFeedback", b =>
                 {
                     b.HasOne("ProductsStore.Models.Product", "Product")
@@ -193,6 +265,11 @@ namespace ProductsStore.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ProductsStore.Models.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

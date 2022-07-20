@@ -35,22 +35,28 @@ else
             <div class="card col-4">
                 <img src="@WebConsts.ImagePath\@product.ImgUrl" class="card-img-top img" alt="productImg">
                 <div class="card-body">
-                    <h5 class="card-title">Наименование - @product.Name</h5>
-                    <p class="card-text">Стоимость товара - @product.Price тг</p>
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Цена - @product.Price тг</p>
                     <p class="card-text">Дата добавления - @product.CreateDate</p>
                     <div class="d-flex justify-content-around">
-                        <a asp-route-productId="@product.Id"
-                           asp-action="Create"
-                           asp-controller="Orders"
-                           class="btn btn-success">
-                            Заказать
-                        </a>
-                        <a asp-route-productId="@product.Id"
-                           asp-action="About"
-                           asp-controller="Products"
-                           class="btn btn-warning">
-                            Детали
-                        </a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (!User.IsInRole("admin"))
+                            {
+                                <a asp-route-productId="@product.Id"
+                                   asp-action="Create"
+                                   asp-controller="Orders"
+                                   class="btn btn-success">
+                                    Заказать
+                                </a>
+                            }
+                            <a asp-route-productId="@product.Id"
+                               asp-action="About"
+                               asp-controller="Products"
+                               class="btn btn-warning">
+                                Детали
+                            </a>
+                        }
                     </div>
                 </div>
             </div>

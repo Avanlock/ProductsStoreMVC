@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProductsStore.Models;
 
 namespace ProductsStore.Controllers
 {
+    [Authorize(Roles = "user")]
     public class UserFeedbacksController : Controller
     {
         private readonly ProductContext _db;
@@ -30,6 +32,7 @@ namespace ProductsStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                userFeedback.UserName = User.Identity.Name;
                 _db.UserFeedbacks.Add(userFeedback);
                 _db.SaveChanges();
                 return Redirect($"~/Products/About/?productId={userFeedback.ProductId}");

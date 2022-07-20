@@ -18,9 +18,15 @@ namespace ProductsStore.Controllers
         public bool CheckDate(DateTime foundationDate) => foundationDate.Year > 100 && foundationDate < DateTime.Now;
 
         [AcceptVerbs("GET", "POST")]
-        public bool CheckBrand(string name) => !_context.Brands.ToList().Any(b => b.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+        public bool CheckBrand(string name) => !_context.Brands.ToList()
+            .Any(b => b.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         
         [AcceptVerbs("GET", "POST")]
-        public bool CheckCategory(string name) => !_context.Categories.ToList().Any(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+        public bool CheckCategory(string name) => !_context.Categories.ToList()
+            .Any(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+
+        [AcceptVerbs("GET", "POST")]
+        public bool CheckEmail(string email) => !_context.Users.ToList()
+            .Any(u => u.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -16,6 +17,7 @@ namespace ProductsStore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             var orders = _db.Orders.Include(p => p.Product).ToList();
@@ -23,6 +25,7 @@ namespace ProductsStore.Controllers
         }
         
         [HttpGet]
+        [Authorize(Roles = "user")]
         public IActionResult Create(int productId)
         {
             var product = _db.Products.FirstOrDefault(p => p.Id == productId);
@@ -37,11 +40,18 @@ namespace ProductsStore.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles = "user")]
         public IActionResult Create(Order order)
         {
-            _db.Orders.Add(order);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                order.UserName = User.Identity.Name;
+                _db.Orders.Add(order);
+                _db.SaveChanges();
+                return Redirect($"~/Products/About/?productId={order.ProductId}");
+            }
+
+            return View();
         }
     }
 }

@@ -8,7 +8,6 @@ namespace ProductsStore.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Заполните поле!")]
         [Remote("CheckBrand", "Validation", ErrorMessage = "Такой бренд уже есть")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Заполните поле!")]

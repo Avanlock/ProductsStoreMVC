@@ -29,6 +29,7 @@ namespace ProductsStore.Controllers
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
             };
+            
             ClaimsIdentity id = new ClaimsIdentity(
                 claims,
                 "ApplicationCookie",
